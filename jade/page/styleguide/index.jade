@@ -158,22 +158,46 @@ block content
       a.button.button--prominent(href='#')
         i.fa.fa-camera-retro
         |&nbsp; Call To Action
-  section#input
-    h2 Choosers
-      .container
-        h3 Input
-        .grid
-          .col-1-3
-            label Simple text field
-          .col-2-3
-            input(type='text' placeholder='Placeholder Text')
-        .grid
-          .col-1-3
-            label Password field
-          .col-2-3
-            input(type='password' value='dogee')
   section#forms
     h2 Forms
+    .content
+      form
+        .grid.form__row
+          .col-1-3.form__input
+            label Textfield
+            input(type='text' placeholder='something')
+          .col-1-3.form__input
+            label Password
+            input(type='password' placeholder='something' value='dogee')
+          .col-1-3.form__input
+            label Select
+            select
+              option(value='' disabled selected) Choose...
+              option(value='1') Option 1
+              option(value='1') Option 2
+              option(value='1') Option 3
+        .grid.form__row
+          .col-1-2.form__input.form__input--disabled
+            label Disabled Textfield
+            input(type='text' readonly='true' placeholder='readonly something')
+          .col-1-2.form__input.form__input--disabled
+            label Select
+            select(disabled)
+              option(value='' disabled selected) Choose...
+              option(value='1') Option 1
+              option(value='1') Option 2
+              option(value='1') Option 3
+        .grid.form__row
+          .col-1-2.form__input.form__input--error(data-error='some error happened and textfield is now red')
+            label Errored Textfield
+            input(type='text' placeholder='something')
+          .col-1-2.form__input.form__input--error(data-error='super long description of the error what happened while the form was processed on the server')
+            label Errored Select
+            select(disabled)
+              option(value='' disabled selected) Choose...
+              option(value='1') Option 1
+              option(value='1') Option 2
+              option(value='1') Option 3
   section#images
     h2 Images
     
