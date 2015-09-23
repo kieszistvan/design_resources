@@ -1,0 +1,179 @@
+extends ../../base/template.jade
+
+append head-styles
+  link(rel="stylesheet" type="text/css" media="all" href="/css/styleguide.css")
+
+block content
+  header
+    h1 RapidMiner Style Guide
+    p Last updated: 
+      strong 2015.09.22. - Istvan
+  section#colors
+    h2 Colors
+    .container
+      each val in ['orange', 'yellow', 'grey', 'black', 'blue']
+        .color-box
+          .color-box__rect(class='color-box--#{ val }')
+          .color-box__label rapid-#{ val }
+  section#fonts
+    h2 Fonts
+    .container
+      h3 Open Sans
+      .grid.font-text.font-text--light
+        .col-1-3 Light 300
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.
+      .grid.font-text.font-text--light.font-text--italic
+        .col-1-3 Light 300 Italic
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.
+      .grid.font-text.font-text--normal
+        .col-1-3 Normal 400
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.
+      .grid.font-text.font-text--normal.font-text--italic
+        .col-1-3 Normal 400 Italic
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.
+      .grid.font-text.font-text--semi-bold 
+        .col-1-3 Semi-Bold 600
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.
+      .grid.font-text.font-text--semi-bold.font-text--italic 
+        .col-1-3 Semi-Bold 600 Italic 
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.
+      .grid.font-text.font-text--bold 
+        .col-1-3 Bold 700
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.
+      .grid.font-text.font-text--bold.font-text--italic 
+        .col-1-3 Bold 700 Italic 
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.
+      .grid.font-text.font-text--extra-bold 
+        .col-1-3 Extra-Bold 800 
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.
+      .grid.font-text.font-text--extra-bold.font-text--italic 
+        .col-1-3 Extra-Bold 800 Italic 
+        .col-2-3 Grumpy wizards make toxic brew for the evil Queen and Jack.  
+  section#grid
+    h2 Grid
+    .container
+      .grid
+        .col-1-2 
+          span col-1-2
+        .col-1-2 
+          span col-1-2
+      .grid
+        .col-1-3 
+          span col-1-3
+        .col-2-3 
+          span col-2-3
+      .grid
+        .col-1-4 
+          span col-1-4
+        .col-1-4 
+          span col-1-4
+        .col-1-4
+          span col-1-4
+        .col-1-4 
+          span col-1-4
+      .grid
+        .col-1-8 
+          span col-1-8
+        .col-1-8 
+          span col-1-8
+        .col-1-8 
+          span col-1-8
+        .col-1-8 
+          span col-1-8
+        .col-1-2 
+          span col-1-2
+      .grid
+        .col-1-12 
+          span col-1-12
+        .col-1-12 
+          span col-1-12
+        .col-1-12 
+          span col-1-12
+        .col-1-12 
+          span col-1-12
+        .col-1-12 
+          span col-1-12
+        .col-1-12 
+          span col-1-12
+        .col-1-2 
+          span col-1-2
+  section#typography
+    h2 Typography
+    .container
+      h3 Headings
+      h1 H1 Heading
+      h2 H2 Heading
+      h3 H3 Heading
+      h4 H4 Heading
+      h5 H5 Heading
+      h6 H6 Heading
+    .container
+      h3 Flow text
+      p.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nec ligula tortor. Proin scelerisque accumsan 
+        enim, ac rhoncus urna tristique vitae. Pellentesque turpis velit, ultrices a dictum at, porta eget eros. 
+        Donec porttitor tellus at laoreet interdum. Mauris turpis metus, pellentesque eget neque eu, facilisis auctor 
+        nulla. Nulla malesuada sed lacus viverra dapibus. Aenean mollis maximus augue vitae interdum. Quisque maximus 
+        condimentum dui, sit amet varius sem commodo id.
+    .container
+      h3 Lists
+      ul
+        li Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        li Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        li Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        li Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+    .container
+      h3 Blockquotes
+      blockquote.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nec ligula tortor. Proin scelerisque accumsan 
+        enim, ac rhoncus urna tristique vitae. Pellentesque turpis velit, ultrices a dictum at, porta eget eros. 
+  section#hyperlinks
+    h2 HyperLinks
+    .container
+      a(href='#') This is an anchor
+  section#buttons
+    h2 Buttons
+    .container
+      p The default button color is rapid-blue. Available modifiers:
+      ul
+        li 
+          strong (rapid-yellow|rapid-black|rapid-orange|rapid-grey)
+          |: colors the button 
+        li 
+          strong clean
+          |: button with inverse coloring (white background, blue border)
+        li 
+          strong prominent
+          |: makes button bigger
+      a.button(href='#') Call To Action
+      a.button.button--rapid-orange(href='#') Call To Action
+      a.button.button--rapid-black(href='#') Call To Action
+      a.button.button--rapid-grey(href='#') Call To Action
+      a.button.button--rapid-yellow(href='#')
+        i.fa.fa-camera-retro
+        |&nbsp; Call To Action
+      a.button.button--clean(href='#')
+        |Call To Action &nbsp;
+        i.fa.fa-camera-retro
+      a.button.button--prominent(href='#')
+        i.fa.fa-camera-retro
+        |&nbsp; Call To Action
+  section#input
+    h2 Choosers
+      .container
+        h3 Input
+        .grid
+          .col-1-3
+            label Simple text field
+          .col-2-3
+            input(type='text' placeholder='Placeholder Text')
+        .grid
+          .col-1-3
+            label Password field
+          .col-2-3
+            input(type='password' value='dogee')
+  section#forms
+    h2 Forms
+  section#images
+    h2 Images
+    

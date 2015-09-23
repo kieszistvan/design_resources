@@ -1,0 +1,37 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# editorconfig.org
+
+root = true
+
+[*]
+
+# Change these settings to your own preference
+indent_style = space
+indent_size = 2
+
+max_line_length = 120
+
+# We recommend you to keep these unchanged
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.js]
+indent_size = 2
+jslint_happy = true
+trim_trailing_whitespace = true
+quote_type = single
+curly_bracket_next_line = true
+spaces_around_operators = true
+space_after_control_statements = true
+space_after_anonymous_functions = true
+spaces_in_brackets = false
+
+[*.jade]
+indent_style = space
+indent_size = 2

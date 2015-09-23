@@ -1,0 +1,26 @@
+@mixin clearfix {
+  display: inline-block;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  //* html & { height: 1px }
+}
+
+@mixin box-sizing($val) {
+  -moz-box-sizing: $val;
+  -webkit-box-sizing: $val;
+  box-sizing: $val;
+}
+
+@mixin font-size($sizeList) {
+  font-size: nth($sizeList, 1);
+  font-size: nth($sizeList, 2);
+}
+
+@mixin transition($duration: 0.2s) {
+  transition: all $duration ease-out;
+}

@@ -1,0 +1,27 @@
+{
+  "name": "design_resources",
+  "version": "1.0.0",
+  "description": "Resource repository containing CSS and Jade files for development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sass"
+  ],
+  "author": "Istvan Kiesz",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "jade": "^1.11.0"
+  },
+  "devDependencies": {
+    "del": "^2.0.2",
+    "forever": "^0.15.1",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-sass": "^2.0.4",
+    "tail": "^0.4.0"
+  }
+}
