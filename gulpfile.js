@@ -7,24 +7,41 @@ var path = require('path');
 var exec = require('child_process').exec;
 var Tail = require('tail').Tail;
 
-var logFile = {
-  log: 'forever.log',
-  err: 'forever.err'
+var files = {
+  forever: {
+    log: 'forever.log',
+    err: 'forever.err'
+  },
+  server: {
+    src: path.join(__dirname, '/server/**/*.js'),
+    dest: path.join(__dirname, '/__dist/server'),
+    main: path.join(__dirname, '/__dist/server/index.js')
+  },
+  sass: {
+    src: path.join(__dirname, '/sass/**/*.*'),
+    dest: path.join(__dirname, '/__dist/css')
+  },
+  jade: {
+    src: path.join(__dirname, '/jade/**/*.jade'),
+    dest: path.join(__dirname, '/__dist/jade')
+  },
+  fonts: {
+    src: path.join(__dirname, '/fonts/**/*'),
+    dest: path.join(__dirname, '/__dist/fonts')
+  }
 };
 
 /**
- *
  *  Server tasks
- *
  */
 gulp.task('server:compile', function () {
-  return gulp.src('server/**/*.js')
+  return gulp.src(files.server.src)
     .pipe(babel())
-    .pipe(gulp.dest('dist/server'));
+    .pipe(gulp.dest(files.server.dest));
 });
 
 gulp.task('server:clean', function () {
-  return del('dist/server/**/*');
+  return del(path.join(files.server.dest, '/**/*'));
 });
 
 gulp.task('server', ['server:clean', 'server:compile'], function () {
@@ -36,11 +53,11 @@ var execute = function execute(operation, callback) {
 
   var child = exec(foreverBin + ' ' + operation +
     ' -a' +
-    ' -o ' + logFile.log +
-    ' -e ' + logFile.err +
+    ' -o ' + files.forever.log +
+    ' -e ' + files.forever.err +
     ' --minUptime ' + 1000 +
     ' --spinSleepTime ' + 1000 +
-    ' ./dist/server/index.js',
+    ' ' + files.server.main,
     function (error, stdout, stderr) {
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
@@ -70,7 +87,7 @@ var readTail = function readTail(file) {
 
 gulp.task('server:watch', function () {
   execute('start');
-  var watcher = gulp.watch('server/**/*.js', ['server:clean', 'server:compile']);
+  var watcher = gulp.watch(files.server.src, ['server:clean', 'server:compile']);
   watcher.on('change', function (event) {
     execute('restart');
   });
@@ -85,61 +102,55 @@ gulp.task('server:watch', function () {
     });
   });
 
-  readTail(logFile.log);
-  readTail(logFile.err);
+  readTail(files.forever.log);
+  readTail(files.forever.err);
 });
 
 /**
- *
  *  Sass tasks
- *
  */
 gulp.task('sass:clean', function () {
-  return del('dist/css');
+  return del(files.sass.dest);
 });
 
-gulp.task('sass', ['sass:clean'], function () {
-  gulp.src('sass/**/*.scss')
+gulp.task('sass', function () {
+  gulp.src(files.sass.src)
     .pipe(sass({
       outputStyle: 'compressed'
     }).on('error', sass.logError))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest(files.sass.dest));
 });
 
 gulp.task('sass:watch', function () {
-  gulp.watch('sass/**/*.scss', ['sass']);
+  gulp.watch(files.sass.src, ['sass']);
 });
 
 /**
- *
  *  Jade tasks
- *
  */
 gulp.task('jade:clean', function () {
-  return del('dist/page');
+  return del(files.jade.dest);
 });
 
 gulp.task('jade', ['jade:clean'], function () {
-  gulp.src('jade/**/*.jade')
-    .pipe(gulp.dest('dist/jade'));
+  gulp.src(files.jade.src)
+    .pipe(gulp.dest(files.jade.dest));
 });
 
 gulp.task('jade:watch', function () {
-  gulp.watch('jade/**/*.jade', ['jade']);
+  gulp.watch(files.jade.src, ['jade']);
 });
 
 /**
- *
  * Font tasks
- *
  */
 gulp.task('fonts:clean', function () {
-  return del('dist/fonts');
+  return del(files.fonts.dest);
 });
 
 gulp.task('fonts', ['fonts:clean'], function () {
-  gulp.src('fonts/**/*.*')
-    .pipe(gulp.dest('dist/fonts'));
+  gulp.src(files.fonts.src)
+    .pipe(gulp.dest(files.fonts.dest));
 });
 
 gulp.task('fonts:watch', function () {
@@ -147,9 +158,7 @@ gulp.task('fonts:watch', function () {
 });
 
 /**
- *
  *  Simples
- *
  */
 gulp.task('default', ['sass', 'jade', 'fonts', 'server']);
 

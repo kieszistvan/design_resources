@@ -1,4 +1,4 @@
 *.log
 *.err
-dist/
+__dist/
 node_modules/

@@ -2,8 +2,9 @@
   "name": "design_resources",
   "version": "1.0.0",
   "description": "Resource repository containing CSS and Jade files for development",
-  "main": "index.js",
+  "main": "__dist/server/index.js",
   "scripts": {
+    "start": "node __dist/server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
