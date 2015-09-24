@@ -42,20 +42,6 @@ var files = {
 /**
  *  Server tasks
  */
-gulp.task('server:compile', function () {
-  return gulp.src(files.server.src)
-    .pipe(babel())
-    .pipe(gulp.dest(files.server.dest));
-});
-
-gulp.task('server:clean', function () {
-  return del(path.join(files.server.dest, '/**/*'));
-});
-
-gulp.task('server:compile', ['server:clean', 'server:compile'], function () {
-
-});
-
 var execute = function execute(operation, callback) {
   var foreverBin = path.join(__dirname, 'node_modules/.bin/forever');
 
@@ -92,6 +78,15 @@ var readTail = function readTail(file) {
   });
 };
 
+gulp.task('server:clean', function () {
+  return del(path.join(files.server.dest, '/**/*'));
+});
+
+gulp.task('server:compile', ['server:clean'], function () {
+  return gulp.src(files.server.src)
+    .pipe(babel())
+    .pipe(gulp.dest(files.server.dest));
+});
 
 gulp.task('server:watch', function () {
   execute('start');
@@ -123,7 +118,6 @@ gulp.task('client:clean', function () {
 
 gulp.task('client:compile', ['client:clean'], function () {
   var entries = glob.sync('client/**/index.js');
-  console.log(entries);
   browserify({
       entries: entries
     })
@@ -144,7 +138,7 @@ gulp.task('sass:clean', function () {
   return del(files.sass.dest);
 });
 
-gulp.task('sass:compile', function () {
+gulp.task('sass:compile', ['sass:clean'], function () {
   gulp.src(files.sass.src)
     .pipe(sass({
       outputStyle: 'compressed'
