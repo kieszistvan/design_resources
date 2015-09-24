@@ -6,6 +6,10 @@ var babel = require('gulp-babel');
 var path = require('path');
 var exec = require('child_process').exec;
 var Tail = require('tail').Tail;
+var browserify = require('browserify');
+var babelify = require('babelify');
+var source = require('vinyl-source-stream');
+var glob = require('glob');
 
 var files = {
   forever: {
@@ -28,6 +32,10 @@ var files = {
   fonts: {
     src: path.join(__dirname, '/fonts/**/*'),
     dest: path.join(__dirname, '/__dist/fonts')
+  },
+  client: {
+    src: path.join(__dirname, '/client/**/*.js'),
+    dest: path.join(__dirname, '/__dist/client')
   }
 };
 
@@ -44,7 +52,7 @@ gulp.task('server:clean', function () {
   return del(path.join(files.server.dest, '/**/*'));
 });
 
-gulp.task('server', ['server:clean', 'server:compile'], function () {
+gulp.task('server:compile', ['server:clean', 'server:compile'], function () {
 
 });
 
@@ -107,13 +115,36 @@ gulp.task('server:watch', function () {
 });
 
 /**
+ * Client
+ */
+gulp.task('client:clean', function () {
+  return del(files.client.dest);
+});
+
+gulp.task('client:compile', ['client:clean'], function () {
+  var entries = glob.sync('client/**/index.js');
+  console.log(entries);
+  browserify({
+      entries: entries
+    })
+    .transform(babelify)
+    .bundle()
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest(files.client.dest));
+});
+
+gulp.task('client:watch', function () {
+  gulp.watch(files.client.src, ['client:compile']);
+});
+
+/**
  *  Sass tasks
  */
 gulp.task('sass:clean', function () {
   return del(files.sass.dest);
 });
 
-gulp.task('sass', function () {
+gulp.task('sass:compile', function () {
   gulp.src(files.sass.src)
     .pipe(sass({
       outputStyle: 'compressed'
@@ -122,7 +153,7 @@ gulp.task('sass', function () {
 });
 
 gulp.task('sass:watch', function () {
-  gulp.watch(files.sass.src, ['sass']);
+  gulp.watch(files.sass.src, ['sass:compile']);
 });
 
 /**
@@ -132,13 +163,13 @@ gulp.task('jade:clean', function () {
   return del(files.jade.dest);
 });
 
-gulp.task('jade', ['jade:clean'], function () {
+gulp.task('jade:copy', ['jade:clean'], function () {
   gulp.src(files.jade.src)
     .pipe(gulp.dest(files.jade.dest));
 });
 
 gulp.task('jade:watch', function () {
-  gulp.watch(files.jade.src, ['jade']);
+  gulp.watch(files.jade.src, ['jade:copy']);
 });
 
 /**
@@ -148,18 +179,18 @@ gulp.task('fonts:clean', function () {
   return del(files.fonts.dest);
 });
 
-gulp.task('fonts', ['fonts:clean'], function () {
+gulp.task('fonts:copy', ['fonts:clean'], function () {
   gulp.src(files.fonts.src)
     .pipe(gulp.dest(files.fonts.dest));
 });
 
 gulp.task('fonts:watch', function () {
-  gulp.watch('fonts/**', ['fonts']);
+  gulp.watch('fonts/**', ['fonts:copy']);
 });
 
 /**
  *  Simples
  */
-gulp.task('default', ['sass', 'jade', 'fonts', 'server']);
+gulp.task('default', ['sass:compile', 'jade:copy', 'fonts:copy', 'server:compile', 'client:compile']);
 
-gulp.task('watch', ['sass:watch', 'jade:watch', 'server:watch']);
+gulp.task('watch', ['sass:watch', 'jade:watch', 'server:watch', 'client:watch']);
