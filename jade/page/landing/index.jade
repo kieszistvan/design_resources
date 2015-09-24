@@ -1,7 +1,7 @@
 extends ../../base/template.jade
 
-block head-styles
-  link(rel="stylesheet" type="text/css" media="all" href="/css/landing.css")
+append head-links
+  link(rel='stylesheet' type='text/css' media='all' href='#{ urlPath.static.css }/landing.css')
   
 block content
   header

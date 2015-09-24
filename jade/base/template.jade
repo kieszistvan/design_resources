@@ -5,8 +5,8 @@ html
     block head-metas
       meta(charset="utf-8")
     block head-links
-      link(rel='stylesheet' href='/static/css/normalize/normalize.css')
-      link(rel='stylesheet' href='/static/css/font-awesome/font-awesome.css')
+      link(rel='stylesheet' href='#{ urlPath.static.css }/normalize/normalize.css')
+      link(rel='stylesheet' href='#{ urlPath.static.css }/font-awesome/font-awesome.css')
     block head-scripts
     block head-styles
   body
@@ -17,4 +17,4 @@ html
         block content
       .overlay
     block body-scripts
-      script(src='/static/js/bundle.js') 
+      script(src='#{ urlPath.static.js }/bundle.js') 
